@@ -11,6 +11,32 @@ const con = mysql.createConnection({
     database: process.env.DB_NAME
 });
 
+function createUserTable() {
+    const query = `
+        CREATE TABLE IF NOT EXISTS user (
+            id INT(11) NOT NULL AUTO_INCREMENT,
+            username VARCHAR(255) DEFAULT NULL,
+            password VARCHAR(255) DEFAULT NULL,
+            email VARCHAR(255) DEFAULT NULL,
+            created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+            admin TINYINT(1) DEFAULT 0,
+            game VARCHAR(255) DEFAULT NULL,
+            current_streak INT(11) DEFAULT 0,
+            highest_streak INT(11) DEFAULT 0,
+            PRIMARY KEY (id)
+        ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+    `;
+    con.query(query, (err) => {
+        if (err) {
+            console.error('Error creating Leaderboard table:', err);
+        } else {
+            console.log('Leaderboard table created or already exists');
+        }
+    });
+}
+
+createUserTable();
+
 function AddUser(name, email, password, game, msg) {
     const query = "SELECT * FROM user WHERE email = ? AND game = ?";
     const values = [email,game];

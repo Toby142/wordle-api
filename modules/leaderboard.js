@@ -8,6 +8,29 @@ const con = mysql.createConnection({
     password: process.env.DB_PASSWORD,
     database: process.env.DB_NAME
 });
+
+function createLeaderboardTable() {
+    const query = `
+        CREATE TABLE IF NOT EXISTS leaderboard (
+            id INT(11) NOT NULL AUTO_INCREMENT,
+            score INT(255),
+            user_id INT(255),
+            PRIMARY KEY (id),
+            KEY user_id (user_id),
+            CONSTRAINT leaderboard_ibfk_1 FOREIGN KEY (user_id) REFERENCES user (id)
+        ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+    `;
+    con.query(query, (err) => {
+        if (err) {
+            console.error('Error creating Leaderboard table:', err);
+        } else {
+            console.log('Leaderboard table created or already exists');
+        }
+    });
+}
+
+createLeaderboardTable();
+
 function AddToLeaderboard(token, score, msg) {
     const query = "SELECT * FROM Leaderboard WHERE user_id = ?";
     const values = [token];
