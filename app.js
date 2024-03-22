@@ -154,7 +154,7 @@ router.post('/:Game/DeleteLeaderboard',GameExist,CheckContentType, (req, res) =>
   DeleteFromLeaderboard(id,Game, res);
 });
 
-router.get('/:Game/GetLeaderboard',GameExist,CheckContentType, (req, res) => {
+router.get('/:Game/GetLeaderboard',GameExist, (req, res) => {
   const Game = req.params['Game'];
   GetLeaderBoard(Game, res);
 });
