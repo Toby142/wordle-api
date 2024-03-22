@@ -159,6 +159,11 @@ router.get('/:Game/GetLeaderboard',GameExist,CheckContentType, (req, res) => {
   GetLeaderBoard(Game, res);
 });
 
+// make a router for if there is nothign it just returns a 404
+router.get('/', (req, res) => {
+  res.status(404).json({ error: 'Not found' });
+});
+
 
 //WORDLE WORD ROUTES
 
@@ -179,6 +184,12 @@ router.get('/:Game/Word',GameExist,(req,res,next) => {
 
 app.use('/',ApiKeyMiddleware,limiter,router);
 
-http.createServer(app).listen(3000,function(){
-  console.log("gestart");
-})
+// create server
+const server = http.createServer(app);
+
+// listen on port
+const port = process.env.PORT || 3000;
+
+server.listen(port, () => {
+  console.log(`Server running on port ${port}`);
+});
