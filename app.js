@@ -120,13 +120,13 @@ router.post('/:Game/DeleteUser',GameExist,CheckContentType, (req, res) => {
   DeleteUser(Token,Game, res);
 });
 
-router.get('/:Game/GetUser',GameExist,CheckContentType, (req, res) => {
+router.get('/:Game/GetUser',GameExist, (req, res) => {
   const {Token} = req.body;
   const Game = req.params['Game'];
   GetUser(Token,Game, res);
 });
 
-router.get('/:Game/GetUsers',GameExist,CheckContentType, (req, res) => {
+router.get('/:Game/GetUsers',GameExist, (req, res) => {
   const Game = req.params['Game'];
   GetUsers(Game,res);
 });
