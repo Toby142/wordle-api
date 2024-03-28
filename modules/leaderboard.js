@@ -44,7 +44,7 @@ createLeaderboardTable();
 
 function AddToLeaderboard(token, score, msg) {
     const query = "SELECT * FROM leaderboard WHERE user_id = ?";
-    const values = [token];
+    const values = [score, token];
     con.query(query, values, async (err, rows) => {
         if (err) {
             console.error('Error executing query', err);
