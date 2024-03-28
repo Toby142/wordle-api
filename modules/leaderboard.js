@@ -43,7 +43,7 @@ function createLeaderboardTable() {
 createLeaderboardTable();
 
 function AddToLeaderboard(token, score, msg) {
-    const query = "SELECT * FROM Leaderboard WHERE user_id = ?";
+    const query = "SELECT * FROM leaderboard WHERE user_id = ?";
     const values = [token];
     con.query(query, values, async (err, rows) => {
         if (err) {
@@ -51,7 +51,7 @@ function AddToLeaderboard(token, score, msg) {
             msg.status(500).json({ error: 'An error occurred while adding item to the database' });
         }
         else if(rows.length === 0){
-            const insertQuery = "INSERT INTO Leaderboard (score, user_id) VALUES (?,?)"; // Renamed query variable to insertQuery
+            const insertQuery = "INSERT INTO leaderboard (score, user_id) VALUES (?,?)"; // Renamed query variable to insertQuery
             const insertValues = [score, token]; // Renamed values variable to insertValues
             con.query(insertQuery, insertValues, async (err) => { // Updated variable names
                 if(err){
