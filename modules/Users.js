@@ -56,7 +56,7 @@ function AddUser(name, email, password, game, msg) {
             msg.status(500).json({ error: 'An error occurred while adding item to the database' });
         } else if (rows.length === 0) {
             bcrypt.hash(password, saltRounds, function(err, hash) {
-                const insertQuery = "INSERT INTO User (username, email, password, game) VALUES (?,?,?,?)";
+                const insertQuery = "INSERT INTO user (username, email, password, game) VALUES (?,?,?,?)";
                 const insertValues = [name, email, hash, game];
                 con.query(insertQuery, insertValues, (err) => {
                     if (err) {
@@ -76,7 +76,7 @@ function AddUser(name, email, password, game, msg) {
 }
 
 function DeleteUser(token, game, msg) {
-    const query = "DELETE FROM User WHERE id = ? AND game = ?";
+    const query = "DELETE FROM user WHERE id = ? AND game = ?";
     const values = [token, game];
 
     con.query(query, values, (err) => {
